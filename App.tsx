@@ -392,8 +392,8 @@ const App: React.FC = () => {
                 <div className="flex items-start space-x-3 text-sm">
                   <Phone size={18} className="text-accent shrink-0" />
                   <div>
-                    <a href="tel:89153312765" className="font-bold block hover:text-accent">8-915-331-27-65</a>
-                    <a href="tel:89058784010" className="font-bold block hover:text-accent">8-905-878-40-10</a>
+                    <a href="tel:89153312765" className="font-bold block hover:text-accent">+7-915-331-27-65</a>
+                    <a href="tel:89058784010" className="font-bold block hover:text-accent">+7-905-878-40-10</a>
                     <p className="text-gray-500">Виталий</p>
                   </div>
                 </div>
