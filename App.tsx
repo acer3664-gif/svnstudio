@@ -10,7 +10,7 @@ import {
   X,
   ChevronRight
 } from 'lucide-react';
-import GlassCard from './components/GlassCard';
+import GlassCard from './GlassCard';
 import { 
   ADVANTAGES, 
   SERVICE_PACKAGES, 
