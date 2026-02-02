@@ -14,7 +14,7 @@ import {
   FileText, 
   UserPlus
 } from 'lucide-react';
-import { ServicePackage, ProcessStep, Advantage, ExtraService } from './types';
+import { ServicePackage, ProcessStep, Advantage, ExtraService, Project } from './types';
 
 export const ADVANTAGES: Advantage[] = [
   {
@@ -25,7 +25,7 @@ export const ADVANTAGES: Advantage[] = [
   {
     icon: Users,
     title: "Команда профи",
-    description: "Специалисты с профильным образованием (электрики, сантехники, маляры и др.)."
+    description: "Специалисты with профильным образованием (электрики, сантехники, маляры и др.)."
   },
   {
     icon: ShieldCheck,
@@ -65,14 +65,14 @@ export const PROCESS_STEPS: ProcessStep[] = [
   },
   {
     title: "Точная Смета за 48 Часов",
-    description: "Пришлем детальную смету с графиком. Все прозрачно и честно."
+    description: "Пришлем детальную смету with графиком. Все прозрачно и честно."
   },
   {
     title: "Реализация поэтапно",
     description: "Начинаем работу. Вы платите только за фактически выполненный результат."
   },
   {
-    title: "Сдача с Гарантией",
+    title: "Сдача with Гарантией",
     description: "Чистовая уборка, оформление документов, гарантийное обслуживание."
   }
 ];
@@ -91,7 +91,7 @@ export const EXTRA_SERVICES: ExtraService[] = [
   {
     id: "03",
     title: "Коммуникации 'под ключ'",
-    description: "Берем общение с УК и дизайнерами на себя. Ваше спокойствие — наша работа."
+    description: "Берем общение with УК и дизайнерами на себя. Ваше спокойствие — наша работа."
   },
   {
     id: "04",
@@ -117,4 +117,28 @@ export const WORK_LIST = [
   "Багеты, плинтуса полиуретан, скрытые",
   "Натяжные потолки, гипсокартон, грильяты",
   "Ресепшены и многое другое"
+];
+
+export const PROJECTS: Project[] = [
+  {
+    title: "ЖК 'Скандинавия'",
+    description: "Полная перепланировка и дизайн в стиле минимализм.",
+    beforeImg: "https://storage.yandexcloud.net/213/1%20(2).png",
+    afterImg: "https://storage.yandexcloud.net/213/1-1.png",
+    category: "Комфорт"
+  },
+  {
+    title: "Апартаменты на Пресне",
+    description: "Комплексный ремонт with заменой всех коммуникаций.",
+    beforeImg: "https://storage.yandexcloud.net/213/2.png",
+    afterImg: "https://storage.yandexcloud.net/213/2-2.png",
+    category: "Бизнес"
+  },
+  {
+    title: "Лофт в Центре",
+    description: "Реставрация кирпичной кладки и монтаж скрытых систем.",
+    beforeImg: "https://storage.yandexcloud.net/213/3.png",
+    afterImg: "https://storage.yandexcloud.net/213/3-3.png",
+    category: "Стандарт"
+  }
 ];

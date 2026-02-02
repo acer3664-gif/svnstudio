@@ -23,3 +23,11 @@ export interface ExtraService {
   title: string;
   description: string;
 }
+
+export interface Project {
+  title: string;
+  description: string;
+  beforeImg: string;
+  afterImg: string;
+  category: string;
+}

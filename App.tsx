@@ -8,19 +8,24 @@ import {
   User, 
   Menu, 
   X,
-  ChevronRight
+  ChevronRight,
+  ArrowLeft,
+  Image as ImageIcon
 } from 'lucide-react';
-import GlassCard from './GlassCard';
+import GlassCard from './components/GlassCard';
 import { 
   ADVANTAGES, 
   SERVICE_PACKAGES, 
   PROCESS_STEPS, 
   EXTRA_SERVICES, 
   WORK_LIST,
-  RESULTS_STATS
+  RESULTS_STATS,
+  PROJECTS
 } from './constants';
 
-const Navbar: React.FC = () => {
+type View = 'home' | 'gallery';
+
+const Navbar: React.FC<{ setView: (v: View) => void; currentView: View }> = ({ setView, currentView }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -32,32 +37,41 @@ const Navbar: React.FC = () => {
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, id: string) => {
     e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80; // Approximate height of the fixed navbar
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      setIsOpen(false);
+    if (currentView !== 'home') {
+      setView('home');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
     }
+    setIsOpen(false);
   };
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass py-4 shadow-sm' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div className="text-2xl font-serif font-bold tracking-tight text-accent">SVN STUDIO</div>
+        <div 
+          className="text-2xl font-serif font-bold tracking-tight text-accent cursor-pointer"
+          onClick={() => setView('home')}
+        >
+          SVN STUDIO
+        </div>
         
         <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
           <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-accent transition-colors">О нас</a>
+          <button onClick={() => setView('gallery')} className={`hover:text-accent transition-colors ${currentView === 'gallery' ? 'text-accent' : ''}`}>Галерея работ</button>
           <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-accent transition-colors">Услуги</a>
           <a href="#process" onClick={(e) => scrollToSection(e, 'process')} className="hover:text-accent transition-colors">Процесс</a>
-          <a href="#contacts" onClick={(e) => scrollToSection(e, 'contacts')} className="hover:text-accent transition-colors">Контакты</a>
           <button 
             onClick={(e) => scrollToSection(e, 'contacts')}
             className="bg-accent text-white px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-bold hover:opacity-90 transition-opacity"
@@ -71,13 +85,12 @@ const Navbar: React.FC = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden glass absolute top-full left-0 right-0 p-6 flex flex-col space-y-4 animate-in slide-in-from-top duration-300">
           <a href="#about" className="py-2 border-b border-accent/10" onClick={(e) => scrollToSection(e, 'about')}>О нас</a>
+          <button onClick={() => { setView('gallery'); setIsOpen(false); }} className="py-2 border-b border-accent/10 text-left">Галерея работ</button>
           <a href="#services" className="py-2 border-b border-accent/10" onClick={(e) => scrollToSection(e, 'services')}>Услуги</a>
           <a href="#process" className="py-2 border-b border-accent/10" onClick={(e) => scrollToSection(e, 'process')}>Процесс</a>
-          <a href="#contacts" className="py-2 border-b border-accent/10" onClick={(e) => scrollToSection(e, 'contacts')}>Контакты</a>
           <button 
             onClick={(e) => scrollToSection(e, 'contacts')} 
             className="bg-accent text-white py-3 rounded-xl text-center font-bold"
@@ -90,17 +103,87 @@ const Navbar: React.FC = () => {
   );
 };
 
-const Hero: React.FC = () => {
+const GalleryView: React.FC<{ setView: (v: View) => void }> = ({ setView }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="pt-32 pb-24 bg-[#faf9f6] min-h-screen">
+      <div className="container mx-auto px-6">
+        <button 
+          onClick={() => setView('home')}
+          className="flex items-center space-x-2 text-accent mb-8 hover:opacity-70 transition-opacity uppercase text-xs font-bold tracking-widest"
+        >
+          <ArrowLeft size={16} />
+          <span>Назад на главную</span>
+        </button>
+
+        <div className="mb-16">
+          <h1 className="text-5xl md:text-6xl font-serif mb-6">Галерея работ</h1>
+          <p className="text-gray-500 max-w-2xl text-lg">Посмотрите, как мы преображаем жилые пространства. Каждый проект — это история трансформации от бетонных стен до уютного дома.</p>
+        </div>
+
+        <div className="grid gap-20">
+          {PROJECTS.map((project, idx) => (
+            <div key={idx} className="group">
+              <div className="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-accent/20 pb-4">
+                <div>
+                  <div className="text-accent text-xs font-bold uppercase tracking-widest mb-2">{project.category}</div>
+                  <h3 className="text-3xl font-serif">{project.title}</h3>
+                </div>
+                <p className="text-gray-500 mt-4 md:mt-0 text-sm italic">{project.description}</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 h-[400px] md:h-[500px]">
+                {/* Before */}
+                <div className="relative rounded-3xl overflow-hidden shadow-lg group/img">
+                  <img src={project.beforeImg} alt="До ремонта" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105" />
+                  <div className="absolute inset-0 bg-black/20"></div>
+                  <div className="absolute top-6 left-6 glass px-4 py-2 rounded-full">
+                    <span className="text-xs font-bold uppercase tracking-widest text-white drop-shadow-sm">До ремонта</span>
+                  </div>
+                </div>
+
+                {/* After */}
+                <div className="relative rounded-3xl overflow-hidden shadow-xl group/img">
+                  <img src={project.afterImg} alt="После ремонта" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105" />
+                  <div className="absolute top-6 left-6 bg-accent px-4 py-2 rounded-full shadow-lg">
+                    <span className="text-xs font-bold uppercase tracking-widest text-white">После ремонта</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-24 p-12 glass rounded-[40px] text-center max-w-4xl mx-auto">
+          <h3 className="text-3xl font-serif mb-6">Хотите такую же трансформацию?</h3>
+          <p className="text-gray-600 mb-8 max-w-xl mx-auto">Оставьте заявку на бесплатный замер и расчет сметы. Мы приедем в удобное для вас время и проконсультируем по всем вопросам.</p>
+          <button 
+            onClick={() => {
+              setView('home');
+              setTimeout(() => {
+                document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' });
+              }, 100);
+            }}
+            className="bg-[#2d2a26] text-white px-10 py-5 rounded-xl font-bold hover:bg-black transition-all shadow-xl inline-flex items-center space-x-3"
+          >
+            <span>Заказать замер</span>
+            <ArrowRight size={18} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Hero: React.FC<{ setView: (v: View) => void }> = ({ setView }) => {
   const scrollToSection = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
     }
   };
 
@@ -135,10 +218,11 @@ const Hero: React.FC = () => {
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </button>
             <button 
-              onClick={(e) => scrollToSection(e, 'services')}
-              className="glass px-10 py-5 rounded-xl border border-accent/20 hover:bg-white/50 transition-all text-center text-base"
+              onClick={() => setView('gallery')}
+              className="glass px-10 py-5 rounded-xl border border-accent/20 hover:bg-white/50 transition-all text-center text-base flex items-center space-x-2"
             >
-              Наши работы
+              <ImageIcon size={18} className="text-accent" />
+              <span>Наши работы</span>
             </button>
           </div>
         </div>
@@ -159,24 +243,10 @@ const SectionHeading: React.FC<{title: string; subtitle?: string; centered?: boo
   </div>
 );
 
-const App: React.FC = () => {
-  const scrollToSection = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-    }
-  };
-
+const HomeView: React.FC<{ setView: (v: View) => void }> = ({ setView }) => {
   return (
-    <div className="antialiased">
-      <Navbar />
-      <Hero />
+    <>
+      <Hero setView={setView} />
 
       {/* Experience & Stats Section */}
       <section id="about" className="py-24 bg-white">
@@ -240,7 +310,10 @@ const App: React.FC = () => {
                   ))}
                 </ul>
                 <button 
-                  onClick={(e) => scrollToSection(e, 'contacts')}
+                  onClick={() => {
+                    const el = document.getElementById('contacts');
+                    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+                  }}
                   className={`block w-full text-center py-4 rounded-xl text-sm font-bold uppercase tracking-wider transition-colors ${idx === 1 ? 'bg-accent text-white hover:bg-opacity-90' : 'bg-accent/10 text-accent hover:bg-accent hover:text-white'}`}
                 >
                   Выбрать пакет
@@ -257,27 +330,16 @@ const App: React.FC = () => {
           <SectionHeading title="Начните прямо сейчас: простой и прозрачный процесс" />
           
           <div className="relative pt-8">
-            {/* Central Vertical Line (Spine) */}
             <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-6 w-[2px] bg-accent/20 z-0"></div>
 
             <div className="space-y-16 relative">
               {PROCESS_STEPS.map((step, idx) => {
-                // To have steps 1 and 3 on the Left, and 2 and 4 on the Right:
-                // idx 0, 2 -> Left (isRight = false)
-                // idx 1, 3 -> Right (isRight = true)
                 const isRight = idx % 2 !== 0; 
-                
                 return (
                   <div key={idx} className="flex flex-col md:flex-row items-center relative min-h-[120px]">
-                    
-                    {/* Horizontal Connection Line */}
                     <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 h-[2px] bg-accent/30 z-10 transition-all duration-300
-                                    ${isRight 
-                                      ? 'left-1/2 ml-10 w-16' 
-                                      : 'right-1/2 mr-10 w-16' 
-                                    }`}></div>
+                                    ${isRight ? 'left-1/2 ml-10 w-16' : 'right-1/2 mr-10 w-16' }`}></div>
 
-                    {/* Step Card Container */}
                     <div className={`w-full md:w-1/2 flex ${isRight ? 'md:justify-start order-1 md:order-2 md:pl-28' : 'md:justify-end order-1 md:pr-28'}`}>
                       <div className="p-8 w-full max-w-sm glass rounded-2xl border border-accent/10 shadow-sm hover:border-accent/40 transition-colors z-20">
                         <div className="text-accent text-[10px] font-bold uppercase mb-2 tracking-[0.2em] opacity-80">Шаг 0{idx + 1}</div>
@@ -286,12 +348,10 @@ const App: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Number Circle (Anchor Point) */}
                     <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border-4 border-accent items-center justify-center text-accent text-sm font-bold shadow-md z-30">
                       {idx + 1}
                     </div>
                     
-                    {/* Spacer for the other side */}
                     <div className={`hidden md:block md:w-1/2 ${isRight ? 'order-1' : 'order-2'}`}></div>
                   </div>
                 );
@@ -327,7 +387,10 @@ const App: React.FC = () => {
                   <p className="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-4">Наши контакты</p>
                   <p className="text-lg font-serif mb-4">Готовы обсудить ваш проект прямо сейчас?</p>
                   <button 
-                    onClick={(e) => scrollToSection(e, 'contacts')}
+                    onClick={() => {
+                      const el = document.getElementById('contacts');
+                      if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+                    }}
                     className="flex items-center space-x-2 text-sm font-bold text-accent hover:underline"
                   >
                     <span>Связаться с Виталием</span>
@@ -392,8 +455,8 @@ const App: React.FC = () => {
                 <div className="flex items-start space-x-3 text-sm">
                   <Phone size={18} className="text-accent shrink-0" />
                   <div>
-                    <a href="tel:89153312765" className="font-bold block hover:text-accent">+7-915-331-27-65</a>
-                    <a href="tel:89058784010" className="font-bold block hover:text-accent">+7-905-878-40-10</a>
+                    <a href="tel:89153312765" className="font-bold block hover:text-accent">8-915-331-27-65</a>
+                    <a href="tel:89058784010" className="font-bold block hover:text-accent">8-905-878-40-10</a>
                     <p className="text-gray-500">Виталий</p>
                   </div>
                 </div>
@@ -407,9 +470,9 @@ const App: React.FC = () => {
             <div className="space-y-6">
               <h4 className="text-lg font-serif">Быстрые ссылки</h4>
               <ul className="space-y-3 text-sm text-gray-500">
-                <li><button onClick={(e) => scrollToSection(e, 'about')} className="hover:text-accent">О компании</button></li>
-                <li><button onClick={(e) => scrollToSection(e, 'services')} className="hover:text-accent">Наши услуги</button></li>
-                <li><button onClick={(e) => scrollToSection(e, 'process')} className="hover:text-accent">Как мы работаем</button></li>
+                <li><button onClick={() => { const el = document.getElementById('about'); if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' }); }} className="hover:text-accent">О компании</button></li>
+                <li><button onClick={() => { const el = document.getElementById('services'); if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' }); }} className="hover:text-accent">Наши услуги</button></li>
+                <li><button onClick={() => { const el = document.getElementById('process'); if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' }); }} className="hover:text-accent">Как мы работаем</button></li>
                 <li><a href="#" className="hover:text-accent">Политика конфиденциальности</a></li>
               </ul>
             </div>
@@ -420,6 +483,22 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
+    </>
+  );
+};
+
+const App: React.FC = () => {
+  const [view, setView] = useState<View>('home');
+
+  return (
+    <div className="antialiased">
+      <Navbar setView={setView} currentView={view} />
+      
+      {view === 'home' ? (
+        <HomeView setView={setView} />
+      ) : (
+        <GalleryView setView={setView} />
+      )}
     </div>
   );
 };
