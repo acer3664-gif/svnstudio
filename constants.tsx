@@ -129,14 +129,14 @@ export const PROJECTS: Project[] = [
   },
   {
     title: "Апартаменты на Пресне",
-    description: "Комплексный ремонт with заменой всех коммуникаций.",
+    description: "Комплексный ремонт с заменой всех коммуникаций.",
     beforeImg: "https://storage.yandexcloud.net/213/2.png",
     afterImg: "https://storage.yandexcloud.net/213/2-2.png",
     category: "Бизнес"
   },
   {
     title: "Лофт в Центре",
-    description: "Реставрация кирпичной кладки и монтаж скрытых систем.",
+    description: "Ремонт без перепланировки",
     beforeImg: "https://storage.yandexcloud.net/213/3.png",
     afterImg: "https://storage.yandexcloud.net/213/3-3.png",
     category: "Стандарт"
