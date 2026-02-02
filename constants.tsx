@@ -135,7 +135,7 @@ export const PROJECTS: Project[] = [
     category: "Бизнес"
   },
   {
-    title: "Лофт в Центре",
+    title: "Однокомнатная квартира в Одинцово",
     description: "Ремонт без перепланировки",
     beforeImg: "https://storage.yandexcloud.net/213/3.png",
     afterImg: "https://storage.yandexcloud.net/213/3-3.png",
