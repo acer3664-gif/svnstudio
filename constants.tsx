@@ -125,7 +125,7 @@ export const PROJECTS: Project[] = [
     description: " Перепланировка и дизайн выполненный в общем стиле бренда.",
     beforeImg: "https://storage.yandexcloud.net/213/5.png",
     afterImg: "https://storage.yandexcloud.net/213/5-5.jpg",
-    category: 
+    category: "Бренд"
   },
   {
     title: "ЖК 'Скандинавия'",
