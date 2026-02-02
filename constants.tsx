@@ -120,6 +120,13 @@ export const WORK_LIST = [
 ];
 
 export const PROJECTS: Project[] = [
+   {
+    title: "Студия массажа",
+    description: " Перепланировка и дизайн выполненный в общем стиле бренда.",
+    beforeImg: "https://storage.yandexcloud.net/213/5.png",
+    afterImg: "https://storage.yandexcloud.net/213/5-5.jpg",
+    category: 
+  },
   {
     title: "ЖК 'Скандинавия'",
     description: "Полная перепланировка и дизайн в стиле минимализм.",
