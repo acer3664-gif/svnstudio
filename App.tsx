@@ -203,7 +203,7 @@ const Hero: React.FC<{ setView: (v: View) => void }> = ({ setView }) => {
           <div className="inline-block py-1 px-4 rounded-full border border-accent/30 bg-accent/5 text-accent text-xs font-semibold uppercase tracking-wider">
             SVN Studio • 18 лет на рынке
           </div>
-          <h1 className="text-6xl md:text-6xl font-serif leading-tight">
+          <h1 className="text-5xl md:text-5xl font-serif leading-tight">
             Ремонтно-отделочные работы <span className="text-accent italic">любой</span> сложности
           </h1>
           <p className="text-xl text-gray-800 leading-relaxed font-medium max-w-xl">
