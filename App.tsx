@@ -121,7 +121,7 @@ const GalleryView: React.FC<{ setView: (v: View) => void }> = ({ setView }) => {
 
         <div className="mb-16">
           <h1 className="text-5xl md:text-6xl font-serif mb-6">Галерея работ</h1>
-          <p className="text-gray-500 max-w-2xl text-lg">Посмотрите, как мы преображаем жилые пространства. Каждый проект — это история трансформации от бетонных стен до уютного дома.</p>
+          <p className="text-gray-500 max-w-2xl text-lg">Посмотрите, как мы преображаем жилые и коммерческие пространства. Каждый проект — это история трансформации от бетонных стен до уютного дома и офиса.</p>
         </div>
 
         <div className="grid gap-20">
