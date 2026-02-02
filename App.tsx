@@ -12,7 +12,7 @@ import {
   ArrowLeft,
   Image as ImageIcon
 } from 'lucide-react';
-import GlassCard from './components/GlassCard';
+import GlassCard from './GlassCard';
 import { 
   ADVANTAGES, 
   SERVICE_PACKAGES, 
