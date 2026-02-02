@@ -144,8 +144,8 @@ export const PROJECTS: Project[] = [
    {
     title: "Загородный дом",
     description: "Ремонт без перепланировки",
-    beforeImg: "https://storage.yandexcloud.net/213/4-4.png",
-    afterImg: "https://storage.yandexcloud.net/213/4.png",
+    beforeImg: "https://storage.yandexcloud.net/213/4.png",
+    afterImg: "https://storage.yandexcloud.net/213/4-4.png",
     category: "Бизнес"
   }
 ];
