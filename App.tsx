@@ -127,7 +127,7 @@ const GalleryView: React.FC<{ setView: (v: View) => void }> = ({ setView }) => {
         <div className="grid gap-20">
           {PROJECTS.map((project, idx) => (
             <div key={idx} className="group">
-              <div className="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-accent/20 pb-4">
+              <div className="flex flex-col md:flex-row justify-between md:items-end items-start mb-8 border-b border-accent/20 pb-4">
                 <div>
                   <div className="text-accent text-xs font-bold uppercase tracking-widest mb-2">{project.category}</div>
                   <h3 className="text-3xl font-serif">{project.title}</h3>
